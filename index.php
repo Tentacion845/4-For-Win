@@ -18,7 +18,7 @@
     <h1>4 For Win</h1>
     <form action="" method="">
       <input type="text" />
-      <input type="password" />
+      <input type="password" require />
 
       <button type="submit">Connexion</button>
     </form>
