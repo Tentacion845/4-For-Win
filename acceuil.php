@@ -1,12 +1,65 @@
 <?php
 
-$dataBase = new PDO('mysql:host=localhost;dbname=bts;charset=utf8', 'root', '');
+try{
 
-$email = $_POST['email'];
-$password = $_POST['password'];
+  $dataBase = new PDO('mysql:host=localhost;dbname=bts;charset=utf8', 'root', '');
+
+} 
+catch(Exception $e) {
+
+die ('Erreur :'. $e->getMessage());
+
+}
 
 
-echo password_hash($password, PASSWORD_DEFAULT); 
+try{
+if (isset($_POST['submit'])) {
+
+  $email = htmlspecialchars(trim($_POST['email']));
+  $password = htmlspecialchars(trim($_POST['password']));
+  $repeatpassword = htmlspecialchars(trim($_POST['repeatpassword']));
+  $datetime = new DateTime();
+  $Newdatetime  = $datetime->format('Y-m-d H:i:s');
+
+  if ($email && $password && $repeatpassword )
+  {
+    if (strlen($password) >= 6 && $password === $repeatpassword )
+    echo hash('sha256', $password );
+   
+   // Verification de l'email :
+    if (isset($_POST['email']))
+    {
+    
+      $checkEmail = "SELECT * FROM users WHERE email = '$email'";
+      $query = $dataBase->prepare($checkEmail); 
+      $query->execute();  
+      $resultat = $query->fetchAll();
+      // var_dump($checkEmail);
+      if (count($resultat) >=1)  {
+ 
+        throw new Exception('Email déjà existant');
+         
+      } 
+
+      }
+    
+    }
+
+
+  $sqlQuery = "INSERT INTO users (email, passwords, date_connexion) VALUES ('$email','$password','$Newdatetime')";
+$query = $dataBase->prepare($sqlQuery); 
+$query->execute();  
+
+
+
+}
+
+} catch(Exception $e){
+  $erreur = 'Erreur : ' . $e->getMessage();
+
+}
+
+
 
 
 ?>
@@ -22,22 +75,43 @@ echo password_hash($password, PASSWORD_DEFAULT);
   </head>
   <body>
     <h1>4 For Win</h1>
+
+  <?php
+
+
+if (!empty($erreur)){
+  echo $erreur;
+} 
+
+  ?>
+
     <form action="acceuil.php" method="POST">
       <label for="">
-        Email : <input type="email" placeholder="exemple@outlook.fr" />
+        Email : <input type="email" name="email" placeholder="exemple@outlook.fr" />
       </label>
       <label for="">
         Mot de passe :
         <input
           type="password"
           id="password"
+          name = "password"
+          required
+          minlength="6"
+          maxlength="25"
+        />
+      </label>
+      <label for="">Répeter votre MDP : 
+        <input
+          type="password"
+          id="repeatpassword"
+          name = "repeatpassword"
           required
           minlength="6"
           maxlength="25"
         />
       </label>
 
-      <button type="submit" >Connexion</button>
+      <button type="submit" name ="submit" >Connexion</button>
     </form>
   </body>
 </html>
