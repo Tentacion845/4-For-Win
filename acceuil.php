@@ -6,6 +6,9 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 
 
+echo password_hash($password, PASSWORD_DEFAULT); 
+
+
 ?>
 
 
