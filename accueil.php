@@ -1,58 +1,43 @@
 <?php
-
-
 session_start();
+include_once 'pdo.php';
+include_once 'navbar.php';
+include_once 'head.php';
+
+// echo '<pre>';
 // var_dump($_SESSION);
-
-if (isset($_SESSION['username'])){
-//  echo 'Bienvenue ' . $_SESSION['username'];
-} else{
-header('Location:connexion.php');
-}
-
-
-
+// echo '<pre>';
 
 
 ?>
 
 
+<header>
+  <h1> Four For Win</h1>
+</header>
+
+<body>
+
+  <div role="alert" aria-live="assertive" aria-atomic="true" class="toast">
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Bootstrap</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
+
+  <p> Bienvenue <?php echo $pseudo ?> </p>
 
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Four For Win</title>
-      <link href="./style.css" rel="stylesheet" > </link>
-  </head>
+</body>
 
-  <header>
-
-  </header>
+<footer>
 
 
-  <nav>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-  </nav>
-  
-  <body>
+</footer>
 
-
-
-
-  </body>
-  
-  <footer>
-
-
-  </footer>
-
-  </html>
+</html>

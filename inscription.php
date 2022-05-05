@@ -1,62 +1,64 @@
 <?php
 
-try{
 
-  $dataBase = new PDO('mysql:host=localhost;dbname=ffw;charset=utf8', 'root', '');
-
-} 
-catch(Exception $e) {
-
-die ('Erreur :'. $e->getMessage());
-
-}
+include_once 'head.php';
+include_once 'pdo.php';
+$errors = [];
 
 
-try{
-if (isset($_POST['submit'])) {
+// Verification de l'email :
+
+$email = '';
+$password = '';
+$repeatPassword = '';
+$secretPassword = '';
+$pseudo = '';
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $email = htmlspecialchars(trim($_POST['email']));
+  $pseudo = htmlspecialchars(trim($_POST['pseudo']));
   $password = htmlspecialchars(trim($_POST['passwords']));
-  $repeatpassword = htmlspecialchars(trim($_POST['repeatpassword']));
-  $datetime = new DateTime();
-  $Newdatetime  = $datetime->format('Y-m-d H:i:s');
+  $repeatPassword = htmlspecialchars(trim($_POST['repeatpassword']));
+  $dateObject = new DateTime();
+  $newDateTime  = $dateObject->format('Y-m-d H:i:s');
 
-  if ($email && $password && $repeatpassword )
-  {
-    if (strlen($password) >= 6 && $password === $repeatpassword )
-   $secretPassword = hash('sha256', $password );
-   
-   // Verification de l'email :
-    if (isset($_POST['email']))
-    {
-    
-      $checkEmail = "SELECT * FROM users WHERE email = '$email'";
-      $query = $dataBase->prepare($checkEmail); 
-      $query->execute();  
-      $resultat = $query->fetchAll();
-      // var_dump($checkEmail);
-      if (count($resultat) >=1)  {
- 
-        throw new Exception('Email déjà existant');
-         
-      } 
+  $secretPassword = hash('sha256', $password);
 
-      }
-    
-    }
+  $checkPseudo = "SELECT * FROM users WHERE pseudo = '$pseudo' ";
+  $query = $dataBase->prepare($checkPseudo);
+  $query->execute();
+  $resultat = $query->fetchAll();
+  if (count($resultat) >= 1) {
+    $errors[] = 'Pseudo déjà exisistant';
+  }
 
-
-  $sqlQuery = "INSERT INTO users (email, passwords, date_connexion) VALUES ('$email','$secretPasswor','$Newdatetime')";
-$query = $dataBase->prepare($sqlQuery); 
-$query->execute();  
+  $checkEmail = "SELECT * FROM users WHERE email = '$email'";
+  $query = $dataBase->prepare($checkEmail);
+  $query->execute();
+  $resultat = $query->fetchAll();
+  // var_dump($checkEmail);
+  if (count($resultat) >= 1) {
+    $errors[] = 'Email déjà existant';
+  }
+  if ($_POST['passwords'] != $_POST['repeatpassword']) {
+    $errors[] = 'Il y a une faute dans le mot de passe';
+  }
 
 
 
-}
+  if (empty($errors)) {
 
-} catch(Exception $e){
-  $erreur = 'Erreur : ' . $e->getMessage();
+    $sqlQuery = $dataBase->prepare("INSERT INTO users (email, pseudo ,passwords, date_connexion) VALUES (:email, :pseudo ,:passwords, :newDateTime)");
 
+    $sqlQuery->bindValue(':email', $email);
+    $sqlQuery->bindValue(':pseudo', $pseudo);
+    $sqlQuery->bindValue(':passwords', $secretPassword);
+    $sqlQuery->bindValue(':newDateTime', $newDateTime);
+    $sqlQuery->execute();
+    header('Location:accueil.php');
+  }
 }
 
 
@@ -65,57 +67,52 @@ $query->execute();
 ?>
 
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inscription</title>
-  </head>
-  <body>
-    <h1>Inscription</h1>
-
-  <?php
 
 
-if (!empty($erreur)){
-  echo $erreur;
-} 
 
-  ?>
+
+<body>
+
+  <p>
+    <a href="connexion.php" class="btn btn-secondary">Retourner à la connexion</a>
+  </p>
+  <h1>Inscription</h1>
+
+  <!-- Si il y a une erreur de validation -->
+
+  <?php if (!empty($errors)) : ?>
+    <div class="alert alert-danger">
+      <?php foreach ($errors as $error) :   ?>
+        <div> <?php echo $error  ?> </div>
+      <?php endforeach; ?>
+    <?php endif; ?>
+    </div>
+
+
 
     <form action="inscription.php" method="POST">
-      <label for="">Email :</label>
-      <input type="email" name="email" placeholder="exemple@outlook.fr" />
-   
-      <label for="">Mot de passe :</label>
-    
-        <input
-          type="password"
-          id="passwords"
-          name = "passwords"
-          required
-          minlength="6"
-          maxlength="25"
-        />
-     
-      <label for="">Répeter votre MDP :</label>
-        <input
-          type="password"
-          id="repeatpassword"
-          name = "repeatpassword"
-          required
-          minlength="6"
-          maxlength="25"
-  
-        />
-     
+      <div class="container">
+        <label for="">Email :</label>
+        <div class="row mb-3">
+          <input type="email" class="form-control" name="email" placeholder="exemple@outlook.fr" value="<?php echo $email ?>" />
+        </div>
 
-      <button type="submit" name ="submit" >Connexion</button>
+        <label for="">Pseudonyme :</label>
+        <div class="row mb-3">
+          <input type="text" class="form-control" name="pseudo" placeholder="Toto" value="<?php echo $pseudo ?>" />
+        </div>
+        <label for="">Mot de passe :</label>
+        <div class="row mb-3">
+          <input class="form-control" type="password" name="passwords" required minlength="6" maxlength="25" />
+        </div>
+
+        <label for="">Répeter votre MDP :</label>
+        <div class="row mb-3">
+          <input class="form-control" type="password" name="repeatpassword" required minlength="6" maxlength="25" />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" name="submit">Submit</button>
     </form>
-  </body>
+</body>
+
 </html>
-
-
-
