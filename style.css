@@ -1,0 +1,51 @@
+* {
+  font-family: "Abel", sans-serif;
+}
+html {
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(#ffff, #777777);
+  height: 100%;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+li {
+  list-style: none;
+  font-size: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+legend {
+  text-align: center;
+}
+
+.navbar {
+  position: sticky;
+}
+
+.left-container {
+  width: 100%;
+}
+
+.left-container img {
+  position: relative;
+  left: 1500px;
+  height: 125px;
+  width: 125px;
+}
+
+.nav-item {
+  justify-content: center;
+  text-align: center;
+}
+
+button .btn .btn-danger {
+  margin-top: 10px;
+}
