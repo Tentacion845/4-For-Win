@@ -22,10 +22,7 @@ if (isset($_POST['email']) && isset($_POST['passwords'])) {
   $row = $check->rowCount();
 
   if ($row == 1) {
-
     $_SESSION = array_merge($_SESSION, $data);
-
-
     header('Location:accueil.php');
   } else {
     $errors[] = 'Votre addresse mail est invalide ou votre mot de passe est invalide';

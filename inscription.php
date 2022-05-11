@@ -1,6 +1,6 @@
 <?php
 
-
+session_start();
 include_once 'head.php';
 include_once 'pdo.php';
 $errors = [];
@@ -26,12 +26,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $secretPassword = hash('sha256', $password);
 
+
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errors[]  = "Email non valide";
+  }
+
   $checkPseudo = "SELECT * FROM users WHERE pseudo = '$pseudo' ";
   $query = $dataBase->prepare($checkPseudo);
   $query->execute();
   $resultat = $query->fetchAll();
   if (count($resultat) >= 1) {
-    $errors[] = 'Pseudo déjà exisistant';
+    $errors[] = 'Pseudo déjà existant';
   }
 
   $checkEmail = "SELECT * FROM users WHERE email = '$email'";
@@ -57,6 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sqlQuery->bindValue(':passwords', $secretPassword);
     $sqlQuery->bindValue(':newDateTime', $newDateTime);
     $sqlQuery->execute();
+
+
+    $check = $dataBase->prepare('SELECT * FROM users WHERE email = ? AND passwords = ? ');
+    $data = $check->fetch();
+    $row = $check->rowCount();
+    $_SESSION = array_merge($_SESSION, $row);
+
     header('Location:accueil.php');
   }
 }

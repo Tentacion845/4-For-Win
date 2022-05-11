@@ -74,29 +74,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 <body>
-
-
-  <h1>Mon Profil</h1>
-
+  <div class="container">
 
 
 
-  <!-- Si il y a une erreur de validation -->
+    <h1>Mon Profil</h1>
 
-  <?php if (!empty($errors)) : ?>
-    <div class="alert alert-danger">
-      <?php foreach ($errors as $error) :   ?>
-        <div> <?php echo $error  ?> </div>
-      <?php endforeach; ?>
+
+
+
+    <!-- Si il y a une erreur de validation -->
+
+    <?php if (!empty($errors)) : ?>
+      <div class="alert alert-danger">
+        <?php foreach ($errors as $error) :   ?>
+          <div> <?php echo $error  ?> </div>
+        <?php endforeach; ?>
+      </div>
     <?php endif; ?>
-    </div>
 
     <?php if ($profil['image']) : ?>
       <a href="image_profil.php"> <img class="product-img-view" src="<?php echo $profil['image'] ?>" class="image-profil"> </a>
 
     <?php else : ?>
       <a href="image_profil.php"><img src="images/DEFAULT/2Q.jpg" class="product-img-view"></a>
-
     <?php endif; ?>
 
 
@@ -122,11 +123,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="row mb-3">
           <input class="form-control" type="password" name="repeatpassword" required minlength="6" maxlength="25" />
         </div>
-
-
         <button type="submit" class="btn btn-primary btn-lg" name="submit">Submit</button>
-
+      </div>
+      <div>
+        <form action="delete.php" method="GET">
+          <button type="submit" class="btn btn-danger" name="Delete " value="<?php echo $profil['user_id'] ?>">Supprimer votre compte</button>
+        </form>
+      </div>
     </form>
+  </div>
 </body>
 
 </html>

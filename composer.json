@@ -1,0 +1,15 @@
+{
+  "name": "adel/ffw",
+  "autoload": {
+    "psr-4": {
+      "app\\": "."
+    }
+  },
+  "authors": [
+    {
+      "name": "Hadel Ladghem",
+      "email": "ladghem.hadel@gmail.com"
+    }
+  ],
+  "require": {}
+}
