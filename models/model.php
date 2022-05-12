@@ -27,3 +27,13 @@ function createUser($email, $pseudo, $secretPassword, $newDateTime)
     $data = $check->fetch();
     return $data;
 }
+
+function checkUser($email, $secretPassword)
+{
+    include "pdo.php";
+    $check = $dataBase->prepare('SELECT * FROM users WHERE email = ? AND passwords = ? ');
+    $checkEmail = $check->execute(array($email, $secretPassword));
+    $data = $check->fetch();
+    $row = $check->rowCount();
+    return $data ?? null;
+}
