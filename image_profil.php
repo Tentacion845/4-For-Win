@@ -1,5 +1,7 @@
 <?php
 session_start();
+$title = 'Mon profil';
+
 include_once 'layouts/head.php';
 include_once 'layouts/navbar.php';
 include_once 'pdo.php';

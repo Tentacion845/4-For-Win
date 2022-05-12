@@ -7,7 +7,7 @@
 
 <!-- Si il y a une erreur de validation -->
 
-<form action="?action=connexion" method="POST">
+<form action="?page=connexion" method="POST">
   <fieldset>
     <legend>Insert your informations</legend>
     <?php if (!empty($errors)) : ?>
@@ -27,7 +27,7 @@
           <input class="form-control" type="password" name="passwords" id="passwords" required minlength="6" maxlength="25" />
         </div>
 
-        <a href="?action=inscription" class="btn btn-primary btn-lg">Inscription</a>
+        <a href="?page=inscription" class="btn btn-primary btn-lg">Inscription</a>
         <button type="submit" class="btn btn-primary btn-lg" name="connexion">Connexion</button>
       </div>
   </fieldset>

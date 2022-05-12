@@ -2,6 +2,7 @@
 
 session_start();
 include_once 'pdo.php';
+$title = 'Mon profil';
 include_once 'layouts/head.php';
 include_once 'layouts/navbar.php';
 

@@ -29,7 +29,7 @@ $pseudo = $_SESSION['pseudo'];
           <a class="nav-link" href="profil.php">Mon profil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="?logout">Deconnexion</a>
+          <a class="nav-link" href="/ffw/?logout">Deconnexion</a>
         </li>
         <li>
           <div class="left-container">

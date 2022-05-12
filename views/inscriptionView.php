@@ -2,7 +2,7 @@
 <?php ob_start(); ?>
 
 <p>
-  <a href="?action=connexion" class="btn btn-secondary">Retourner à la connexion</a>
+  <a href="?page=connexion" class="btn btn-secondary">Retourner à la connexion</a>
 </p>
 <h1>Inscription</h1>
 
@@ -18,7 +18,7 @@
 
 
 
-<form action="inscription.php" method="POST">
+<form action="?page=inscription" method="POST">
   <div class="container">
     <label for="">Email :</label>
     <div class="row mb-3">
