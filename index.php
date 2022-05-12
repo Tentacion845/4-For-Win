@@ -6,20 +6,20 @@ if (isset($_SESSION) && isset($_SESSION['user_id'])) {
         session_destroy();
         header('Location:?action=connexion');
     }
-    var_dump("Islogged", $_SESSION);
-    require('accueilController.php');
+    // var_dump("Islogged", $_SESSION);
+    require('controllers/accueilController.php');
     exit;
 }
 
 if (isset($_GET['action'])) {
     if ($_GET['action'] == 'inscription') {
-        require('inscriptionController.php');
+        require('controllers/inscriptionController.php');
         exit;
     } elseif ($_GET['action'] == 'connexion') {
-        require('connexionController.php');
+        require('controllers/connexionController.php');
         exit;
     }
 } else {
-    require('connexionController.php');
+    require('controllers/connexionController.php');
     exit;
 }

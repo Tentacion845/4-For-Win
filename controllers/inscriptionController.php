@@ -1,7 +1,5 @@
 <?php
-
-session_start();
-include_once 'model.php';
+include_once 'models/model.php';
 $errors = [];
 
 
@@ -45,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userCreated = createUser($email, $pseudo, $secretPassword, $newDateTime);
     $_SESSION = array_merge($_SESSION, $userCreated);
 
-    header('Location:accueil.php');
+    header('Location:/ffw/');
   }
 }
-include 'inscriptionView.php';
+include 'views/inscriptionView.php';

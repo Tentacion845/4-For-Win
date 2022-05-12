@@ -1,7 +1,7 @@
 <?php $title = "Accueil" ?>
 <?php ob_start(); ?>
 <?php
-include_once 'navbar.php';
+include_once 'layouts/navbar.php';
 ?>
 
 <header>
@@ -25,4 +25,4 @@ include_once 'navbar.php';
 
 
 <?php $content = ob_get_clean(); ?>
-<?php include('template.php'); ?>
+<?php include('layouts/template.php'); ?>

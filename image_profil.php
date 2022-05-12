@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once 'head.php';
-include_once 'navbar.php';
+include_once 'layouts/head.php';
+include_once 'layouts/navbar.php';
 include_once 'pdo.php';
 
 $id = $_SESSION['user_id'];
