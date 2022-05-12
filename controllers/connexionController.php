@@ -1,6 +1,6 @@
 <?php
 
-include_once 'model.php';
+include_once 'models/model.php';
 include_once 'pdo.php';
 
 $errors = [];
@@ -25,4 +25,4 @@ if (isset($_POST['email']) && isset($_POST['passwords'])) {
   }
 }
 
-include 'connexionView.php';
+include 'views/connexionView.php';
