@@ -1,30 +1,25 @@
 <?php
+session_start();
 
+if (isset($_SESSION) && isset($_SESSION['user_id'])) {
+    if (isset($_GET['logout'])) {
+        session_destroy();
+        header('Location:?action=connexion');
+    }
+    var_dump("Islogged", $_SESSION);
+    require('accueilController.php');
+    exit;
+}
 
-
-
-?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>4 For Win</title>
-  </head>
-  <body>
-    <h1>4 For Win</h1>
-    <form action="" method="">
-      <input type="text" />
-      <input type="password" require />
-
-      <button type="submit">Connexion</button>
-    </form>
-  </body>
-</html>
-
-
-
-
+if (isset($_GET['action'])) {
+    if ($_GET['action'] == 'inscription') {
+        require('inscriptionController.php');
+        exit;
+    } elseif ($_GET['action'] == 'connexion') {
+        require('connexionController.php');
+        exit;
+    }
+} else {
+    require('connexionController.php');
+    exit;
+}
