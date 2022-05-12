@@ -23,13 +23,13 @@ $pseudo = $_SESSION['pseudo'];
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link " aria-current="page" href="accueil.php">Accueil</a>
+          <a class="nav-link " aria-current="page" href="/ffw/">Accueil</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="profil.php">Mon profil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="deconnexion.php">Deconnexion</a>
+          <a class="nav-link" href="?logout">Deconnexion</a>
         </li>
         <li>
           <div class="left-container">
